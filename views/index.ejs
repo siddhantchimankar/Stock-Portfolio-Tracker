@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+    <ul>
+      <!-- <li><a href="/"> Home </a></li> -->
+
+      <li><a href="/profile/addstock/<%= username %>"> Add Stock </a></li>
+      <!-- <li><a href="/update"> Update User </a></li>
+      <li><a href="/getvalue"> Get Value of User </a></li> -->
+      <li><a href="/profile/delete/<%= username %>"> Delete Stock </a></li>
+    </ul>
+
+    <h3>My Portfolio</h3>
+
+
+  <table>
+    <tr>
+       <th>Stock</th><th>PE</th><th>PEG</th><th>PB</th><th>EV-EBITDA</th>
+    </tr>
+ 
+    <% for (var i = 0; i < stocks.length ; i++) { %>
+     <tr>
+       <td><%= stocks[i].name %></td>
+       <td><%= stocks[i].PE_RATIO %></td>
+       <td><%= stocks[i].PEG_RATIO %></td>
+       <td><%= stocks[i].PB_RATIO %></td>
+       <td><%= stocks[i].EV_EBITDA_RATIO %></td>
+     </tr>    
+    <% } %>
+ </table>
+
+  </body>
+</html>
