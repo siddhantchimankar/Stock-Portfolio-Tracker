@@ -1,10 +1,19 @@
 # Stock Portfolio Tracker
 
-![Stock Portfolio Tracker](https://via.placeholder.com/800x300.png?text=Stock+Portfolio+Tracker)
+![Stock Portfolio Tracker](architecture.png)
 
 ## Overview
 
 The Stock Portfolio Tracker is a powerful and user-friendly application designed to help users manage their stock investments efficiently. It leverages modern web technologies, including MongoDB, Redis, and Node.js, to provide a robust and scalable solution for tracking stock portfolios.
+
+## Gallery
+
+![Auth page](auth.png)
+![Sign Up Page](signup.png)
+![Log In Page](login.png)
+![Stock Portfolio Page](portfolio.png)
+![Add Stock Page](addstock.png)
+![Delete Stock Page](deletestock.png)
 
 ## Features
 
@@ -26,7 +35,7 @@ Ensure you have the following installed on your machine:
 - Redis (running on port 6379)
 
 ### Installation
-git clone https://github.com/yourusername/stock-portfolio-tracker.git
+git clone https://github.com/siddhantchimankar/stock-portfolio-tracker.git
 cd stock-portfolio-tracker
 npm install
 mongod
