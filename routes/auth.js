@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const user = require('../models/user');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const passport = require('passport');
 const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy
@@ -15,7 +15,7 @@ passport.use(
         if (!user) {
           return done(null, false, { message: "Incorrect username" });
         }
-        bcrypt.compare(password, user.password, (err, res) => {
+        bcryptjs.compare(password, user.password, (err, res) => {
             if (res) {
               // passwords match! log user in
               return done(null, user)
@@ -54,7 +54,7 @@ router.get('/signup', (req, res) => {
 
 router.post("/signup", async(req, res, next) => {
 
-   const hashpass = await bcrypt.hash(req.body.password, 10);
+   const hashpass = await bcryptjs.hash(req.body.password, 10);
 
     var newuser = new user({
         username: req.body.username,

@@ -1,41 +1,58 @@
-const dbURL = 'mongodb+srv://sid:1234@cluster0.zhbue.mongodb.net/userdb?retryWrites=true&w=majority';
+const dotenv = require('dotenv');
+dotenv.config();
 
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
+const dbURL = process.env.MONGODB_URI || 'mongodb://localhost:27017/userdb';
+const port = process.env.PORT || 3000;
 
-var indexRouter = require('./routes/index');
-var authRouter = require('./routes/auth');
-var homeRouter = require('./routes/home');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 
+const indexRouter = require('./routes/index');
+const authRouter = require('./routes/auth');
+const homeRouter = require('./routes/home');
 
-var app = express();
+const app = express();
 
-//Set up mongoose connection
-var mongoose = require('mongoose');
-var mongoDB = dbURL;
-mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
-var db = mongoose.connection;
+// Set up mongoose connection
+const mongoose = require('mongoose');
+mongoose.connect(dbURL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', () => {
+  console.log('Connected to MongoDB');
+});
 
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
+// Middleware
+app.use(morgan('dev')); // HTTP request logger
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('/', homeRouter);
-app.get('/', (req, res) => {
-    res.sendFile('index.html', {root : __dirname + '/'});
-});
+// View engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
+// Routes
+app.use('/', homeRouter);
+app.get('/', (req, res) => {
+  res.sendFile('index.html', { root: __dirname + '/' });
+});
 app.use('/profile', indexRouter);
 app.use('/auth', authRouter);
 
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Something went wrong');
+});
 
-
-module.exports = app;
+// Start server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

@@ -1,40 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <body class="bg-gray-100">
+    <nav class="bg-white shadow-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <div class="flex-shrink-0 flex items-center">
+              <img class="h-8 w-8" src="/images/logo.svg" alt="Logo" />
+            </div>
+            <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <a
+                href="/profile/addstock/<%= username %>"
+                class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                Add Stock
+              </a>
+              <a
+                href="/profile/delete/<%= username %>"
+                class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+              >
+                Delete Stock
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-    <ul>
-      <!-- <li><a href="/"> Home </a></li> -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div class="px-4 py-6 sm:px-0">
+        <h1 class="text-3xl font-bold text-gray-900"><%= title %></h1>
+        <p class="mt-1 text-sm text-gray-600">Welcome to <%= title %></p>
+      </div>
 
-      <li><a href="/profile/addstock/<%= username %>"> Add Stock </a></li>
-      <!-- <li><a href="/update"> Update User </a></li>
-      <li><a href="/getvalue"> Get Value of User </a></li> -->
-      <li><a href="/profile/delete/<%= username %>"> Delete Stock </a></li>
-    </ul>
-
-    <h3>My Portfolio</h3>
-
-
-  <table>
-    <tr>
-       <th>Stock</th><th>PE</th><th>PEG</th><th>PB</th><th>EV-EBITDA</th>
-    </tr>
- 
-    <% for (var i = 0; i < stocks.length ; i++) { %>
-     <tr>
-       <td><%= stocks[i].name %></td>
-       <td><%= stocks[i].PE_RATIO %></td>
-       <td><%= stocks[i].PEG_RATIO %></td>
-       <td><%= stocks[i].PB_RATIO %></td>
-       <td><%= stocks[i].EV_EBITDA_RATIO %></td>
-     </tr>    
-    <% } %>
- </table>
-
+      <div class="px-4 py-6 sm:px-0">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">My Portfolio</h3>
+        <div class="flex flex-col mt-3">
+          <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Stock
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        PE
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        PEG
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        PB
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        EV-EBITDA
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <% for (var i = 0; i < stocks.length ; i++) { %>
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                          <div class="ml-4">
+                            <div class="text-sm font-medium text-gray-900">
+                              <%= stocks[i].name %>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= stocks[i].PE_RATIO %></div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= stocks[i].PEG_RATIO %></div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= stocks[i].PB_RATIO %></div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= stocks[i].EV_EBITDA_RATIO %></div>
+                      </td>
+                    </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
